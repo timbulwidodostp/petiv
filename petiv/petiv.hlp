@@ -1,0 +1,82 @@
+{smcl}
+{* 24 Sep, 2012}{...}
+{hline}
+help for {hi:petiv} 
+{hline}
+
+{title:Estimate Person-cenetered Treatment (PeT) effects using instrumental variables}
+
+{p 8 16}{cmd:petiv}{space 1}{it:depvar}{space 1}{it:varlist}
+[{cmd:if} {it:exp}] [{cmd:in} {it:range}] {cmd:,} {cmdab:trt(}{it:varname}{cmd:)} {cmdab:ps(}{it:varname}{cmd:)} {cmdab:cmd(}{it:command_name}{cmd:)} 
+ [{cmdab:deg:ree(}{it:#}{cmd:)} {cmdab:contr:ols(}{it:varlist}{cmd:)} {cmdab:disp:lay}  {it:options}]
+
+ 
+{p 4}where {it:command_name} is one of
+
+{p 8 8}{c -(} {help probit} | {help logit} | {help glm} | {help pglm} |
+{help regress} {c )-}
+
+{p 4} and where {it:options} can be any options corresponding to the {it:command_name}
+
+
+{title:Description}
+
+{p 4 4 2}{cmd:petiv} performs  estimation of Person-centered Treatment (PeT) effects
+comparing two treatments using an user-specified control-function specification and 
+saves the individual  treatment effect estimates in a new variable called {it:pet_depvar}. 
+Identifcation of effects is accomplished via estimated propensity score of treatment receipt
+as a function of risk factors and instrumental variables. This score should be estimated 
+prior to running the {it:petiv} command and passed on using the {it: ps()} option.
+
+
+
+{title:Required Options for {cmd:petiv}}
+
+{p 4 8 2}{cmd:trt(}{it:varname}{cmd:)} specifies a binary treatment variable.
+
+{p 4 8 2}{cmd:ps(}{it:varname}{cmd:)} specifies the variable that contains the estimated 
+propensity score of treatment choice as a function of independent risk factors 
+and instrumental variables.
+
+{p 4 8 2}{cmd:cmd(}{it:command_name}{cmd:)} specifies the regression command that should
+be used to specify the control function that estimates the Marginal Treatment Effects 
+and the PeT effects. All interactions of {it:varlist} with {it:ps} are accounted for. 
+
+
+
+{title:Options for {cmd:petiv}}
+
+
+{p 4 8 2}{cmd:deg:ree(}{it:#}{cmd:)} specifies the degree of polynomial for  {it:ps}
+that will be used in the control function. Default is 1.
+
+{p 4 8 2}{cmd:contr:ols(}{it:varlist}{cmd:)} specifies the list of variable that 
+will be adjusted for in the control function but no interaction with {it:ps}
+will be used. The default is an empty list. The variables listed within this option 
+should not be listed under –varlist– after depvar.
+
+{p 4 8 2}{cmd:disp:lay} displays the regression results from the estimation of the control function.
+
+
+{title:Examples}
+{p 8 12}{inp:. petiv y $xlist, trt(d) ps(phat) cmd(probit) robust}{p_end}
+{p 8 12}{inp:. petiv exp $xlist, trt(d) ps(phat) cmd(glm) link(log) family(gamma) robust}{p_end}
+{p 8 12}{inp:. petiv exp $xlist, trt(d) ps(phat) cmd(pglm) contr(num_phys num_hosp)}{p_end}
+{p 8 12}{inp:. petiv y $xlist, trt(d) ps(phat) cmd(logit) degree(2) contr(num_phys num_hosp) robust}{p_end}
+
+
+{title:Author}
+
+{p 4 4 2}
+{browse "http://faculty.washington.edu/basua/":A. Basu}, Department of Health Services, University of Washington, Seattle, WA, USA.  
+Email {browse "mailto:basua@uw.edu":basua@uw.edu} if you observe any problems.
+
+{title:Reference}
+
+{p 4 4 2}
+Basu A. Estimating person-centered treatment (PeT) effects using instrumental variables. {it: Journal of Applied Econometrics} (2014): In Press DOI: 10.1002/jae.2343.
+
+{title:Also see}
+
+{p 4 13 2}
+Online:  help for {help glm}, {help pglm}
