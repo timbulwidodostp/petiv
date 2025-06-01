@@ -3,6 +3,8 @@ Estimate Person-cenetered Treatment (PeT) effects using instrumental variables U
 
 Person-centered treatment (PeT) effects: Individualized treatment effects using instrumental variables Use petiv With STATA 19
 
+https://www.youtube.com/watch?v=QWFvlZY6xTE
+
 Olah Data Semarang
 
 WA : +6285227746673 (085227746673)
